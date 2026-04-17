@@ -10,11 +10,17 @@ from datetime import datetime
 
 
 def _fmt_dt(dt) -> str | None:
-    """Format a datetime to ISO 8601 string, or None."""
+    """Format a datetime to ISO 8601 string with Z suffix, or None.
+
+    isoformat() on a timezone-aware datetime returns "...+00:00"; appending
+    another "Z" would produce "...+00:00Z" which is invalid and causes
+    JavaScript's new Date() to return Invalid Date.
+    """
     if dt is None:
         return None
     if isinstance(dt, datetime):
-        return dt.isoformat() + "Z"
+        # Strip any explicit UTC offset (+00:00) then append Z
+        return dt.isoformat().replace('+00:00', '') + 'Z'
     return str(dt)
 
 
