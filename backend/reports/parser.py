@@ -56,11 +56,15 @@ class PlaywrightReportParser:
         flaky      = stats.get("flaky", 0)
         skipped    = stats.get("skipped", 0)
         total      = expected + unexpected + flaky + skipped
-        pass_rate  = round((expected / total * 100), 2) if total > 0 else 0.0
+        # Flaky tests eventually passed (on retry), so count them as passed
+        # for pass_rate and the passed counter.  `flaky` is kept separately
+        # so the run status badge can still distinguish flaky runs.
+        passed    = expected + flaky
+        pass_rate = round((passed / total * 100), 2) if total > 0 else 0.0
 
         summary = {
             "total":     total,
-            "passed":    expected,
+            "passed":    passed,
             "failed":    unexpected,
             "flaky":     flaky,
             "skipped":   skipped,
