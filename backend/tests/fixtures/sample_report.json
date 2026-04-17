@@ -1,0 +1,973 @@
+{
+  "config": {
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://ci.example.com/job/example-app/job/web-tests/148/",
+        "commitHash": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+        "branch": "origin/main"
+      },
+      "gitCommit": {
+        "shortHash": "a1b2c3d",
+        "hash": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+        "subject": "feat: add user dashboard feature",
+        "body": "feat: add user dashboard feature\n\nImplements the new user dashboard with analytics widgets.\n",
+        "author": {
+          "name": "Demo User",
+          "email": "demo@example.com",
+          "time": 1775285030000
+        },
+        "committer": {
+          "name": "Demo User",
+          "email": "demo@example.com",
+          "time": 1775285030000
+        },
+        "branch": "HEAD"
+      },
+      "actualWorkers": 5
+    },
+    "preserveOutput": "always",
+    "projects": [],
+    "reporter": [
+      [
+        "list"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "rootDir": "C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests",
+    "quiet": false,
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 5,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "setup\\auth.setup.ts",
+      "file": "setup/auth.setup.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication Setup",
+          "file": "setup/auth.setup.ts",
+          "line": 7,
+          "column": 7,
+          "specs": [
+            {
+              "title": "authenticate as admin user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "authentication setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 50269,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:01:33.749Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-auth-admin.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e717b06d8d484d1cd946-398537059cb7429b01d9",
+              "file": "setup/auth.setup.ts",
+              "line": 8,
+              "column": 8
+            },
+            {
+              "title": "authenticate as standard user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "authentication setup",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 43530,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:01:33.760Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-auth-standard.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e717b06d8d484d1cd946-55ff77e7f90739b10321",
+              "file": "setup/auth.setup.ts",
+              "line": 18,
+              "column": 8
+            },
+            {
+              "title": "authenticate as guest user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "authentication setup",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 44201,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:01:33.738Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-auth-guest.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e717b06d8d484d1cd946-6625cebb0e9f595ababa",
+              "file": "setup/auth.setup.ts",
+              "line": 28,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "features\\dashboard.spec.ts",
+      "file": "features/dashboard.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Dashboard Feature Tests",
+          "file": "features/dashboard.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-1001: Verify dashboard page title and navigation",
+              "ok": true,
+              "tags": [
+                "dashboard",
+                "regression",
+                "v2.1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 100000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 26362,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:02:34.868Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-tc1001.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "05700683436778b1e32f-836abb58199b6c3d83ca",
+              "file": "features/dashboard.spec.ts",
+              "line": 10,
+              "column": 9
+            },
+            {
+              "title": "TC-1002: Verify dashboard URL route resolves correctly",
+              "ok": true,
+              "tags": [
+                "dashboard",
+                "regression",
+                "v2.1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 100000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 27992,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:02:34.987Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-tc1002.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "05700683436778b1e32f-6fc344c8ade93fb8792f",
+              "file": "features/dashboard.spec.ts",
+              "line": 18,
+              "column": 9
+            },
+            {
+              "title": "TC-1003: Verify dashboard widget data loads correctly",
+              "ok": true,
+              "tags": [
+                "dashboard",
+                "regression",
+                "v2.1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 100000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 30278,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:02:35.074Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-tc1003.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "05700683436778b1e32f-c26a49f6ea42ca25e51d",
+              "file": "features/dashboard.spec.ts",
+              "line": 25,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "smoke\\login.spec.ts",
+      "file": "smoke/login.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Login and Logout Tests",
+          "file": "smoke/login.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Login - Select workspace and navigate to home",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 28471,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:02:35.176Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-login1.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64979a444cdc2fd6bf8c-01ad641aceb5fb8fe8be",
+              "file": "smoke/login.spec.ts",
+              "line": 7,
+              "column": 7
+            },
+            {
+              "title": "Logout - Verify session is cleared",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 32850,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:02:35.011Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-logout.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64979a444cdc2fd6bf8c-f0154f05f2d1c76e09e9",
+              "file": "smoke/login.spec.ts",
+              "line": 15,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Standard User Login",
+          "file": "smoke/login.spec.ts",
+          "line": 21,
+          "column": 17,
+          "specs": [
+            {
+              "title": "Standard User Login and Logout",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 23417,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:03:02.458Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-standard-login.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64979a444cdc2fd6bf8c-6717dca454d78089e73c",
+              "file": "smoke/login.spec.ts",
+              "line": 22,
+              "column": 18
+            }
+          ]
+        },
+        {
+          "title": "Search Tests",
+          "file": "smoke/login.spec.ts",
+          "line": 29,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Product List - Search by product name",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 59167,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:03:03.952Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-search.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64979a444cdc2fd6bf8c-d6315ef73bdff3b46fbb",
+              "file": "smoke/login.spec.ts",
+              "line": 30,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Order Actions",
+          "file": "smoke/login.spec.ts",
+          "line": 43,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Order Page - Complete order review and download PDF",
+              "ok": false,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [
+                    {
+                      "type": "slow",
+                      "location": {
+                        "file": "C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests/smoke/login.spec.ts",
+                        "line": 62,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 3,
+                      "status": "timedOut",
+                      "duration": 361382,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 360000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 360000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 360000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests/pages/OrderPage.ts",
+                            "column": 39,
+                            "line": 718
+                          },
+                          "message": "Error: page.waitForEvent: Target page, context or browser has been closed\n=========================== logs ===========================\nwaiting for event \"download\"\n============================================================\n\n   at pages/OrderPage.ts:718\n\n  716 |\n  717 |   async downloadOrderSummaryPDF(downloadPath: string) {\n> 718 |     const downloadPromise = this.page.waitForEvent('download');\n      |                                       ^\n  719 |     await this.downloadSummaryButton.last().click();\n  720 |     const download = await downloadPromise;\n  721 |     await download.saveAs(`${downloadPath}/${await download.suggestedFilename()}`);\n    at OrderPage.downloadOrderSummaryPDF (C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests/pages/OrderPage.ts:718:39)\n    at C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests/smoke/login.spec.ts:91:29"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:03:05.711Z",
+                      "annotations": [
+                        {
+                          "type": "slow",
+                          "location": {
+                            "file": "C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests/smoke/login.spec.ts",
+                            "line": 62,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-order-retry0.zip"
+                        }
+                      ]
+                    },
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 362753,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 360000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 360000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 360000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests/pages/OrderPage.ts",
+                            "column": 51,
+                            "line": 719
+                          },
+                          "message": "Error: locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Download Order Summary' }).last()\u001b[22m\n\n\n   at pages/OrderPage.ts:719\n\n  717 |   async downloadOrderSummaryPDF(downloadPath: string) {\n  718 |     const downloadPromise = this.page.waitForEvent('download');\n> 719 |     await this.downloadSummaryButton.last().click();\n      |                                                   ^\n  720 |     const download = await downloadPromise;\n  721 |     await download.saveAs(`${downloadPath}/${await download.suggestedFilename()}`);\n  722 |   }\n    at OrderPage.downloadOrderSummaryPDF (C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests/pages/OrderPage.ts:719:51)\n    at C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests/smoke/login.spec.ts:91:29"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-04-06T00:09:09.870Z",
+                      "annotations": [
+                        {
+                          "type": "slow",
+                          "location": {
+                            "file": "C:/Jenkins/workspace/example-app/web-tests/ci-tests/tests/smoke/login.spec.ts",
+                            "line": 62,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-order-retry1.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "64979a444cdc2fd6bf8c-03074c1f34e43ff09fea",
+              "file": "smoke/login.spec.ts",
+              "line": 59,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "smoke\\admin.spec.ts",
+      "file": "smoke/admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Admin User Login and Logout Tests",
+          "file": "smoke/admin.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Admin Login - Verify admin user login and dashboard access",
+              "ok": true,
+              "tags": [
+                "smoke",
+                "admin"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 22486,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:03:07.830Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-admin-login.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a27c6dc95f338f85144f-decd9984b185ecfa36ee",
+              "file": "smoke/admin.spec.ts",
+              "line": 7,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Normal User Login and Logout Tests",
+          "file": "smoke/admin.spec.ts",
+          "line": 14,
+          "column": 16,
+          "specs": [
+            {
+              "title": "Normal User Login - Verify user login and home page",
+              "ok": true,
+              "tags": [
+                "smoke",
+                "admin"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 19275,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:03:09.699Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-normal-login.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a27c6dc95f338f85144f-7e8dd893ccb04e6971f9",
+              "file": "smoke/admin.spec.ts",
+              "line": 18,
+              "column": 19
+            }
+          ]
+        },
+        {
+          "title": "Home Page Tests",
+          "file": "smoke/admin.spec.ts",
+          "line": 29,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Home Page - Verify summary card and navigate to reports",
+              "ok": true,
+              "tags": [
+                "smoke",
+                "admin"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 35645,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:03:26.663Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-homepage.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a27c6dc95f338f85144f-f8749497c35960735b62",
+              "file": "smoke/admin.spec.ts",
+              "line": 30,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Billing Page Tests",
+          "file": "smoke/admin.spec.ts",
+          "line": 41,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Billing Page - Verify page loaded successfully",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 19864,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:03:30.098Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-billing.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a27c6dc95f338f85144f-11cb79c54b41e7c7d1bd",
+              "file": "smoke/admin.spec.ts",
+              "line": 42,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "File Library Tests",
+          "file": "smoke/admin.spec.ts",
+          "line": 47,
+          "column": 6,
+          "specs": [
+            {
+              "title": "File Library - Verify page loaded successfully",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 17902,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:03:31.132Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-files1.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a27c6dc95f338f85144f-e03992df49b04d22caa8",
+              "file": "smoke/admin.spec.ts",
+              "line": 48,
+              "column": 7
+            },
+            {
+              "title": "File Library - Verify view document function",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectName": "E2E WebUI Tests",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 16692,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-06T00:03:49.597Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:/Jenkins/workspace/example-app/blob-report/resources/trace-files2.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a27c6dc95f338f85144f-3df5288d3deb0758ae79",
+              "file": "smoke/admin.spec.ts",
+              "line": 52,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-06T00:01:30.055Z",
+    "duration": 824354.984,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

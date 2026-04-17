@@ -1,0 +1,17 @@
+# Python
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.pytest_cache/
+backend/**/*.pyc
+backend/**/*.pyo
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Dev/local files
+.env
+.git/
+.gitignore
+*.md
