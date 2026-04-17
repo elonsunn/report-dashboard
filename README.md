@@ -8,7 +8,7 @@ A Playwright test report dashboard for tracking test runs, visualizing trends, a
 - View test results grouped by file with pass/fail/flaky/skip status
 - Track pass rate, duration, and test count trends over time
 - Top failing and flaky test analysis
-- CI/CD integration with Jenkins (and any tool that can run curl)
+- CI/CD integration with Jenkins (upload reports and trigger builds remotely)
 - Multiple projects with isolated run histories
 
 ## Tech Stack
@@ -24,7 +24,7 @@ A Playwright test report dashboard for tracking test runs, visualizing trends, a
 ```bash
 git clone <repo-url>
 cd report-dashboard
-cp .env.example .env        # edit POSTGRES_PASSWORD and DJANGO_SECRET_KEY
+cp .env.example .env        # edit DJANGO_SECRET_KEY, POSTGRES_PASSWORD, JENKINS_USER, JENKINS_TOKEN
 docker compose up -d
 
 # Open the dashboard
@@ -99,6 +99,8 @@ curl -X POST https://your-domain/api/v1/projects/your-project-slug/runs/ \
 
 ## Jenkins Integration
 
+### Uploading reports from Jenkins
+
 Store `REPORT_API_KEY` as a Secret Text credential in Jenkins.
 
 ```groovy
@@ -129,6 +131,23 @@ pipeline {
 }
 ```
 
+### Triggering a build from the dashboard
+
+Each project can store a Jenkins remote trigger URL in **Settings → Jenkins Trigger URL**:
+
+```
+http://your-jenkins/job/your-job/build?token=YOUR_TOKEN&cause=Cause+TriggerFromReportDashboard
+```
+
+A **Trigger Pipeline** button then appears on the latest run, run history, trends, and upload pages. Clicking it POSTs to that URL using the credentials set in the environment:
+
+```env
+JENKINS_USER=your-jenkins-username
+JENKINS_TOKEN=your-jenkins-api-token   # Jenkins user API token (not password)
+```
+
+To generate a Jenkins API token: **Jenkins → Your Profile → Configure → API Token → Add new Token**.
+
 ---
 
 ## API Reference
@@ -141,6 +160,7 @@ pipeline {
 | PUT | `/api/v1/projects/{slug}/` | Update project |
 | DELETE | `/api/v1/projects/{slug}/` | Delete project |
 | POST | `/api/v1/projects/{slug}/api-key/` | Generate API key |
+| POST | `/api/v1/projects/{slug}/trigger/` | Trigger Jenkins build |
 | GET | `/api/v1/projects/{slug}/runs/` | List runs (paginated) |
 | POST | `/api/v1/projects/{slug}/runs/` | Upload report (API key required) |
 | GET | `/api/v1/projects/{slug}/runs/latest/` | Get latest run |
@@ -167,4 +187,7 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=your-password
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
+
+JENKINS_USER=your-jenkins-username
+JENKINS_TOKEN=your-jenkins-api-token
 ```

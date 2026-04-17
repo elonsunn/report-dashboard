@@ -55,12 +55,53 @@ def list_projects() -> list:
 
 def update_project(slug: str, **kwargs) -> Project:
     project = get_project_by_slug(slug)
-    allowed = {'name', 'description'}
+    allowed  = {'name', 'description'}
+    nullable = {'jenkins_url'}
     for key, value in kwargs.items():
         if key in allowed and value is not None:
             setattr(project, key, value)
+        elif key in nullable:
+            # Allow explicit clearing: empty string or None both become NULL
+            setattr(project, key, value or None)
     project.save()   # auto_now=True on updated_at handles the timestamp
     return project
+
+
+def trigger_jenkins(project: Project) -> dict:
+    """POST to the project's Jenkins trigger URL using Basic Auth from env vars."""
+    import base64
+    import os
+    import urllib.request
+    import urllib.error
+
+    if not project.jenkins_url:
+        raise ValueError("No Jenkins URL configured for this project")
+
+    user  = os.environ.get('JENKINS_USER', '')
+    token = os.environ.get('JENKINS_TOKEN', '')
+    if not user or not token:
+        raise ValueError("JENKINS_USER and JENKINS_TOKEN must be set in environment")
+
+    credentials = base64.b64encode(f'{user}:{token}'.encode()).decode()
+    req = urllib.request.Request(
+        project.jenkins_url,
+        method='POST',
+        data=b'',
+        headers={
+            'Authorization': f'Basic {credentials}',
+            'Content-Type':  'application/json',
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return {'status_code': resp.status, 'message': 'Build triggered'}
+    except urllib.error.HTTPError as e:
+        # Jenkins remote trigger typically returns 201 or 302 on success
+        if e.code in (200, 201, 302):
+            return {'status_code': e.code, 'message': 'Build triggered'}
+        raise ValueError(f"Jenkins responded with HTTP {e.code}: {e.reason}")
+    except urllib.error.URLError as e:
+        raise ValueError(f"Could not reach Jenkins: {e.reason}")
 
 
 def delete_project(slug: str) -> None:

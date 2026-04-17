@@ -4,6 +4,7 @@ import { updateProject, generateApiKey } from '../../api/client'
 export default function ProjectSettings({ project, onUpdate, showToast }) {
   const [name, setName]           = useState(project.name)
   const [description, setDesc]    = useState(project.description || '')
+  const [jenkinsUrl, setJenkinsUrl] = useState(project.jenkins_url || '')
   const [apiKey, setApiKey]       = useState(null)
   const [saving, setSaving]       = useState(false)
   const [generatingKey, setGenKey] = useState(false)
@@ -14,7 +15,7 @@ export default function ProjectSettings({ project, onUpdate, showToast }) {
     e.preventDefault()
     setSaving(true)
     try {
-      const updated = await updateProject(project.slug, { name, description })
+      const updated = await updateProject(project.slug, { name, description, jenkins_url: jenkinsUrl })
       onUpdate?.(updated)
       showToast?.('Project updated.', 'success')
     } catch (err) {
@@ -72,6 +73,17 @@ export default function ProjectSettings({ project, onUpdate, showToast }) {
             <code className="text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
               {project.slug}
             </code>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jenkins Trigger URL</label>
+            <input
+              type="url" value={jenkinsUrl} onChange={(e) => setJenkinsUrl(e.target.value)}
+              placeholder="https://jenkins.example.com/job/my-job/build?token=TOKEN"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Remote trigger URL with token parameter. Leave blank to disable.
+            </p>
           </div>
           <button type="submit" disabled={saving}
             className="px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-lg transition-colors">

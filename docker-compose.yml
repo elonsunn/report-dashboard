@@ -16,6 +16,8 @@ services:
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-change-me-in-production}
       - DEBUG=${DEBUG:-False}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1}
+      - JENKINS_USER=${JENKINS_USER:-}
+      - JENKINS_TOKEN=${JENKINS_TOKEN:-}
     depends_on:
       postgres:
         condition: service_healthy

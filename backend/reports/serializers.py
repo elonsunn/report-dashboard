@@ -31,6 +31,7 @@ def serialize_project(project, latest_run=None) -> dict:
         "slug":        project.slug,
         "description": project.description,
         "has_api_key": bool(project.api_key),
+        "jenkins_url": project.jenkins_url,
         "created_at":  _fmt_dt(project.created_at),
         "updated_at":  _fmt_dt(project.updated_at),
     }

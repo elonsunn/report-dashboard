@@ -3,6 +3,7 @@
 from django.urls import path
 from .views import (
     ProjectListView, ProjectDetailView, ProjectGenerateApiKeyView,
+    ProjectTriggerJenkinsView,
     RunListView, RunLatestView, RunDetailView, RunUploadFileView,
     TestCaseListView, TestCaseDetailView,
     ProjectTrendsView, ProjectStatsView, ProjectTopFailuresView, ProjectTopFlakyView,
@@ -13,6 +14,7 @@ urlpatterns = [
     path('projects/',                                   ProjectListView.as_view(),           name='project-list'),
     path('projects/<slug:slug>/',                       ProjectDetailView.as_view(),         name='project-detail'),
     path('projects/<slug:slug>/api-key/',               ProjectGenerateApiKeyView.as_view(), name='project-api-key'),
+    path('projects/<slug:slug>/trigger/',               ProjectTriggerJenkinsView.as_view(), name='project-trigger'),
 
     # --- Test Runs ---
     path('projects/<slug:slug>/runs/',                  RunListView.as_view(),               name='run-list'),

@@ -1,15 +1,18 @@
 import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect, useCallback } from 'react'
 import { getRuns, deleteRun } from '../api/client'
+import { useProject } from '../hooks/useProject'
 import StatusBadge from '../components/common/StatusBadge'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import EmptyState from '../components/common/EmptyState'
 import { SkeletonRow } from '../components/common/SkeletonCard'
 import { formatDuration } from '../utils/formatDuration'
 import { ToastContainer, useToast } from '../components/common/Toast'
+import TriggerJenkinsButton from '../components/common/TriggerJenkinsButton'
 
 export default function RunHistoryPage() {
   const { slug } = useParams()
+  const { project } = useProject(slug)
   const [runs, setRuns]     = useState([])
   const [total, setTotal]   = useState(0)
   const [page, setPage]     = useState(1)
@@ -71,7 +74,12 @@ export default function RunHistoryPage() {
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
       <div className="flex items-center justify-between mb-5">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Run History</h1>
-        <span className="text-sm text-gray-500 dark:text-gray-400">{total} total run{total !== 1 ? 's' : ''}</span>
+        <div className="flex items-center gap-3">
+          {project?.jenkins_url && (
+            <TriggerJenkinsButton slug={slug} showToast={showToast} />
+          )}
+          <span className="text-sm text-gray-500 dark:text-gray-400">{total} total run{total !== 1 ? 's' : ''}</span>
+        </div>
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">

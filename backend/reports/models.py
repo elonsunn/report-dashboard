@@ -22,6 +22,8 @@ class Project(models.Model):
     # API key for CI/CD integrations — format: "rpt_" + 32-char hex
     # NULL means key not yet generated
     api_key     = models.CharField(max_length=100, null=True, blank=True, unique=True)
+    # Jenkins remote trigger URL (e.g. http://ci/job/name/build?token=TOKEN)
+    jenkins_url = models.URLField(max_length=500, null=True, blank=True)
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
 

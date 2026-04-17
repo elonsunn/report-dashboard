@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PassRateRing from '../common/PassRateRing'
 import StatusBadge from '../common/StatusBadge'
+import TriggerJenkinsButton from '../common/TriggerJenkinsButton'
 import { formatDuration } from '../../utils/formatDuration'
 import { deleteRun } from '../../api/client'
 
-export default function RunDetailHeader({ run, slug, showToast }) {
+export default function RunDetailHeader({ run, slug, showToast, jenkinsUrl }) {
   const s   = run?.summary || {}
   const env = run?.environment || {}
   const ci  = run?.ci_info || {}
@@ -42,8 +43,11 @@ export default function RunDetailHeader({ run, slug, showToast }) {
             </h2>
             <StatusBadge status={run.status} />
 
-            {/* Delete control */}
+            {/* Actions */}
             <div className="ml-auto flex items-center gap-2">
+              {jenkinsUrl && (
+                <TriggerJenkinsButton slug={slug} showToast={showToast} />
+              )}
               {!confirming ? (
                 <button
                   onClick={() => setConfirming(true)}

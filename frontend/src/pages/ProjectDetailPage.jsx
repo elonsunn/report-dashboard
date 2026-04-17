@@ -1,17 +1,21 @@
 import { useParams, Link } from 'react-router-dom'
 import { useTestRun } from '../hooks/useTestRun'
 import { useTestCases } from '../hooks/useTestRun'
+import { useProject } from '../hooks/useProject'
 import RunDetailHeader from '../components/runs/RunDetailHeader'
 import TestCaseList from '../components/runs/TestCaseList'
 import StatusFilter from '../components/runs/StatusFilter'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import { SkeletonRunHeader } from '../components/common/SkeletonCard'
 import EmptyState from '../components/common/EmptyState'
+import { ToastContainer, useToast } from '../components/common/Toast'
 import { useState, useDeferredValue } from 'react'
 
 export default function ProjectDetailPage() {
   const { slug } = useParams()
   const { run, loading, error } = useTestRun(slug, 'latest')
+  const { project } = useProject(slug)
+  const { toasts, showToast, dismissToast } = useToast()
   const [status, setStatus]   = useState('')
   const [searchInput, setSearchInput] = useState('')
   const search = useDeferredValue(searchInput)
@@ -46,7 +50,8 @@ export default function ProjectDetailPage() {
 
   return (
     <div className="p-6 space-y-5 max-w-6xl mx-auto">
-      <RunDetailHeader run={run} slug={slug} />
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
+      <RunDetailHeader run={run} slug={slug} showToast={showToast} jenkinsUrl={project?.jenkins_url} />
 
       <div className="flex flex-col sm:flex-row gap-3">
         <StatusFilter value={status} onChange={setStatus} summary={run.summary} />

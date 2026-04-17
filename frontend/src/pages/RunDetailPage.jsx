@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useState, useDeferredValue } from 'react'
 import { useTestRun, useTestCases } from '../hooks/useTestRun'
+import { useProject } from '../hooks/useProject'
 import RunDetailHeader from '../components/runs/RunDetailHeader'
 import StatusFilter from '../components/runs/StatusFilter'
 import TestCaseList from '../components/runs/TestCaseList'
@@ -10,6 +11,7 @@ import { ToastContainer, useToast } from '../components/common/Toast'
 export default function RunDetailPage() {
   const { slug, number } = useParams()
   const { run, loading, error } = useTestRun(slug, number)
+  const { project } = useProject(slug)
   const [status, setStatus]   = useState('')
   const [searchInput, setSearchInput] = useState('')
   const search = useDeferredValue(searchInput)
@@ -24,7 +26,7 @@ export default function RunDetailPage() {
   return (
     <div className="p-6 space-y-5 max-w-6xl mx-auto">
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
-      <RunDetailHeader run={run} slug={slug} showToast={showToast} />
+      <RunDetailHeader run={run} slug={slug} showToast={showToast} jenkinsUrl={project?.jenkins_url} />
 
       <div className="flex flex-col sm:flex-row gap-3">
         <StatusFilter value={status} onChange={setStatus} summary={run.summary} />

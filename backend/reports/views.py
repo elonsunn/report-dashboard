@@ -135,6 +135,7 @@ class ProjectDetailView(APIView):
             slug,
             name=request.data.get('name'),
             description=request.data.get('description'),
+            jenkins_url=request.data.get('jenkins_url'),
         )
         return Response(serializers.serialize_project(project))
 
@@ -158,6 +159,33 @@ class ProjectGenerateApiKeyView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
         return Response({'api_key': key})
+
+
+# ---------------------------------------------------------------------------
+# Jenkins Trigger
+# ---------------------------------------------------------------------------
+
+class ProjectTriggerJenkinsView(APIView):
+    """POST /projects/{slug}/trigger/ — fire the configured Jenkins build"""
+
+    def post(self, request, slug):
+        try:
+            project = services.get_project_by_slug(slug)
+        except Project.DoesNotExist:
+            return Response(
+                {'error': f"Project '{slug}' not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        if not project.jenkins_url:
+            return Response(
+                {'error': 'No Jenkins URL configured. Set it in project settings.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            result = services.trigger_jenkins(project)
+            return Response({'message': 'Build triggered.', 'details': result})
+        except ValueError as e:
+            return Response({'error': str(e)}, status=status.HTTP_502_BAD_GATEWAY)
 
 
 # ---------------------------------------------------------------------------
