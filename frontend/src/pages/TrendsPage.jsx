@@ -5,6 +5,7 @@ import { useProject } from '../hooks/useProject'
 import PassRateChart from '../components/trends/PassRateChart'
 import DurationChart from '../components/trends/DurationChart'
 import CaseCountChart from '../components/trends/CaseCountChart'
+import TotalCaseCountChart from '../components/trends/TotalCaseCountChart'
 import TopFailingTests from '../components/trends/TopFailingTests'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import TriggerJenkinsButton from '../components/common/TriggerJenkinsButton'
@@ -55,6 +56,7 @@ export default function TrendsPage() {
         <PassRateChart data={trends} />
         <DurationChart data={trends} />
         <CaseCountChart data={trends} />
+        <TotalCaseCountChart data={trends} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
