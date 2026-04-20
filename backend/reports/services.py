@@ -67,7 +67,7 @@ def update_project(slug: str, **kwargs) -> Project:
     return project
 
 
-def trigger_jenkins(project: Project) -> dict:
+def trigger_jenkins(project: Project, sprint: str = '') -> dict:
     """POST to the project's Jenkins trigger URL using Basic Auth from env vars."""
     import base64
     import os
@@ -94,14 +94,20 @@ def trigger_jenkins(project: Project) -> dict:
     )
     try:
         with urllib.request.urlopen(req, timeout=10) as resp:
-            return {'status_code': resp.status, 'message': 'Build triggered'}
+            status_code = resp.status
     except urllib.error.HTTPError as e:
         # Jenkins remote trigger typically returns 201 or 302 on success
         if e.code in (200, 201, 302):
-            return {'status_code': e.code, 'message': 'Build triggered'}
-        raise ValueError(f"Jenkins responded with HTTP {e.code}: {e.reason}")
+            status_code = e.code
+        else:
+            raise ValueError(f"Jenkins responded with HTTP {e.code}: {e.reason}")
     except urllib.error.URLError as e:
         raise ValueError(f"Could not reach Jenkins: {e.reason}")
+
+    # Persist the sprint so the next uploaded run inherits it
+    project.pending_sprint = sprint.strip() or None
+    project.save(update_fields=['pending_sprint'])
+    return {'status_code': status_code, 'message': 'Build triggered'}
 
 
 def delete_project(slug: str) -> None:
@@ -182,8 +188,14 @@ def create_test_run(project: Project, parsed_data: dict) -> TestRun:
         started_at=run_info['started_at'],
         environment=environment,
         ci_info=ci_info,
+        sprint=project.pending_sprint,
     )
     run.save()
+
+    # Clear the pending sprint now that it has been claimed by this run
+    if project.pending_sprint:
+        project.pending_sprint = None
+        project.save(update_fields=['pending_sprint'])
 
     # Bulk-create test cases
     test_case_rows = []

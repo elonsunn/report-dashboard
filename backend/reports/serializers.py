@@ -81,6 +81,7 @@ def serialize_run(run) -> dict:
         "started_at":  _fmt_dt(run.started_at),
         "environment": environment,
         "ci_info":     ci_info,
+        "sprint":      run.sprint,
         "created_at":  _fmt_dt(run.created_at),
     }
 
@@ -113,6 +114,7 @@ def serialize_run_summary(run) -> dict:
         "duration":   run.duration,
         "started_at": _fmt_dt(run.started_at),
         "ci_info":    ci_info,
+        "sprint":     run.sprint,
         "created_at": _fmt_dt(run.created_at),
     }
 

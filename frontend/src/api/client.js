@@ -40,7 +40,8 @@ export const deleteProject = (slug) => api.delete(`/projects/${slug}/`)
 
 export const generateApiKey = (slug) => api.post(`/projects/${slug}/api-key/`)
 
-export const triggerJenkins = (slug) => api.post(`/projects/${slug}/trigger/`)
+export const triggerJenkins = (slug, sprint = '') =>
+  api.post(`/projects/${slug}/trigger/`, { sprint })
 
 // ---------------------------------------------------------------------------
 // Test Runs

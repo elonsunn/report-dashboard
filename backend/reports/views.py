@@ -182,7 +182,8 @@ class ProjectTriggerJenkinsView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
-            result = services.trigger_jenkins(project)
+            sprint = (request.data.get('sprint') or '').strip()
+            result = services.trigger_jenkins(project, sprint)
             return Response({'message': 'Build triggered.', 'details': result})
         except ValueError as e:
             return Response({'error': str(e)}, status=status.HTTP_502_BAD_GATEWAY)

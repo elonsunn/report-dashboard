@@ -26,7 +26,7 @@ export default function RunDetailPage() {
   return (
     <div className="p-6 space-y-5 max-w-6xl mx-auto">
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
-      <RunDetailHeader run={run} slug={slug} showToast={showToast} jenkinsUrl={project?.jenkins_url} />
+      <RunDetailHeader run={run} slug={slug} showToast={showToast} jenkinsUrl={project?.jenkins_url} projectName={project?.name} />
 
       <div className="flex flex-col sm:flex-row gap-3">
         <StatusFilter value={status} onChange={setStatus} summary={run.summary} />

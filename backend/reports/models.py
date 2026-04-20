@@ -23,8 +23,10 @@ class Project(models.Model):
     # NULL means key not yet generated
     api_key     = models.CharField(max_length=100, null=True, blank=True, unique=True)
     # Jenkins remote trigger URL (e.g. http://ci/job/name/build?token=TOKEN)
-    jenkins_url = models.URLField(max_length=500, null=True, blank=True)
-    created_at  = models.DateTimeField(auto_now_add=True)
+    jenkins_url    = models.URLField(max_length=500, null=True, blank=True)
+    # Held until the next run is uploaded, then copied to TestRun.sprint
+    pending_sprint = models.CharField(max_length=100, null=True, blank=True)
+    created_at     = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -55,6 +57,7 @@ class TestRun(models.Model):
     started_at  = models.DateTimeField(null=True, blank=True)
     environment = models.JSONField(null=True, blank=True)
     ci_info     = models.JSONField(null=True, blank=True)
+    sprint      = models.CharField(max_length=100, null=True, blank=True)
     created_at  = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -68,7 +71,7 @@ class TestRun(models.Model):
         ]
 
     def __str__(self):
-        return f'TestRun(project={self.project_id}, run={self.run_number})'
+        return f'TestRun(project={self.project.slug}, run={self.run_number})'
 
 
 # ---------------------------------------------------------------------------

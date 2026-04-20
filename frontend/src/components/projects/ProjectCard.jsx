@@ -26,7 +26,9 @@ export default function ProjectCard({ project }) {
         <div className="mt-4 space-y-2">
           <div className="flex items-center gap-2">
             <StatusBadge status={run.status} />
-            <span className="text-xs text-gray-500 dark:text-gray-400">Run #{run.run_number}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              {run.sprint || 'No Sprint Specified'}
+            </span>
           </div>
           <div className="flex items-center gap-4 text-sm">
             <span className="text-green-600 dark:text-green-400 font-medium">

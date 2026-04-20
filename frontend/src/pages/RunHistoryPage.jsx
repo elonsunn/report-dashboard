@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from 'react'
 import { getRuns, deleteRun } from '../api/client'
 import { useProject } from '../hooks/useProject'
 import StatusBadge from '../components/common/StatusBadge'
-import LoadingSpinner from '../components/common/LoadingSpinner'
 import EmptyState from '../components/common/EmptyState'
 import { SkeletonRow } from '../components/common/SkeletonCard'
 import { formatDuration } from '../utils/formatDuration'
@@ -105,7 +104,7 @@ export default function RunHistoryPage() {
                 <td className="px-4 py-3">
                   <Link to={`/projects/${slug}/runs/${run.run_number}`}
                     className="font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
-                    #{run.run_number}
+                    {run.sprint || 'No Sprint Specified'}
                   </Link>
                 </td>
                 <td className="px-4 py-3"><StatusBadge status={run.status} /></td>
