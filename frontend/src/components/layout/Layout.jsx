@@ -86,7 +86,7 @@ function Sidebar({ isOpen, onClose }) {
               <NavItem to={`/projects/${slug}`} end>Latest Run</NavItem>
               <NavItem to={`/projects/${slug}/history`}>Run History</NavItem>
               <NavItem to={`/projects/${slug}/trends`}>Trends</NavItem>
-              <NavItem to={`/projects/${slug}/upload`}>Upload</NavItem>
+              {/* <NavItem to={`/projects/${slug}/upload`}>Upload</NavItem> */}
               <NavItem to={`/projects/${slug}/docs`}>API Docs</NavItem>
               <NavItem to={`/projects/${slug}/settings`}>Settings</NavItem>
             </div>
