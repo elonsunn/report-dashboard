@@ -40,7 +40,7 @@ export default function RunDetailHeader({ run, slug, showToast, jenkinsUrl, proj
           <div className="flex items-center gap-3 mb-3 flex-wrap">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               {run.sprint
-                ? `Sprint: ${[projectName, run.sprint].filter(Boolean).join(' ')}`
+                ? `${[projectName, run.sprint].filter(Boolean).join(' ')}`
                 : 'No Sprint Specified'}
             </h2>
             <StatusBadge status={run.status} />
