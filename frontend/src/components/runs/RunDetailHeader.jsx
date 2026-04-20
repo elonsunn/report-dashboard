@@ -1,8 +1,9 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PassRateRing from '../common/PassRateRing'
 import StatusBadge from '../common/StatusBadge'
 import TriggerJenkinsButton from '../common/TriggerJenkinsButton'
+import EmailReportButton from './EmailReportButton'
 import { formatDuration } from '../../utils/formatDuration'
 import { deleteRun } from '../../api/client'
 
@@ -11,6 +12,7 @@ export default function RunDetailHeader({ run, slug, showToast, jenkinsUrl, proj
   const env = run?.environment || {}
   const ci  = run?.ci_info || {}
   const navigate = useNavigate()
+  const cardRef = useRef(null)
   const [confirming, setConfirming] = useState(false)
   const [deleting,   setDeleting]   = useState(false)
 
@@ -28,7 +30,7 @@ export default function RunDetailHeader({ run, slug, showToast, jenkinsUrl, proj
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+    <div ref={cardRef} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
       <div className="flex flex-col sm:flex-row gap-5 items-start">
         {/* Pass rate ring */}
         <div className="flex-shrink-0">
@@ -47,6 +49,7 @@ export default function RunDetailHeader({ run, slug, showToast, jenkinsUrl, proj
 
             {/* Actions */}
             <div className="ml-auto flex items-center gap-2">
+              <EmailReportButton run={run} projectName={projectName} slug={slug} showToast={showToast} cardRef={cardRef} />
               {jenkinsUrl && (
                 <TriggerJenkinsButton slug={slug} showToast={showToast} />
               )}
