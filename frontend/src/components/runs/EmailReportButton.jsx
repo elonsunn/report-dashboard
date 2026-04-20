@@ -1,64 +1,61 @@
 import { useState } from 'react'
-import { formatDuration } from '../../utils/formatDuration'
+import { getRuns } from '../../api/client'
 
 // ---------------------------------------------------------------------------
 // Email template builders
 // ---------------------------------------------------------------------------
 
-function buildHtml({ sprintLabel, passRate, statusColor, status, duration, startedAt, s, ci, screenshot, dashboardUrl }) {
-  const cap = status.charAt(0).toUpperCase() + status.slice(1)
+function buildHtml({ sprintLabel, bodyText, screenshot, dashboardUrl }) {
+  // Double newlines → paragraph breaks; single newlines → <br> within a paragraph
+  const paragraphs = bodyText.split(/\n{2,}/).filter(s => s.trim())
+  const bodyHtml = paragraphs
+    .map(p => `<p style="font-size:14px;color:#374151;margin:0 0 12px;line-height:1.6;">${p.replace(/\n/g, '<br>')}</p>`)
+    .join('\n  ')
+
   return `<!DOCTYPE html>
 <html>
 <body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#111827;padding:24px 16px;background:#fff;">
-  <h2 style="margin:0 0 6px;font-size:20px;">${sprintLabel}</h2>
-  <p style="margin:0 0 16px;font-size:14px;color:#6b7280;">
-    Status: <strong style="color:${statusColor};">${cap}</strong>
-    &nbsp;·&nbsp; Pass Rate: <strong>${passRate}%</strong>
-    &nbsp;·&nbsp; Duration: <strong>${duration}</strong>
-    ${startedAt !== '—' ? `&nbsp;·&nbsp; Started: <strong>${startedAt}</strong>` : ''}
-  </p>
+  <h2 style="margin:0 0 16px;font-size:20px;">${sprintLabel}</h2>
 
-  ${screenshot ? `<img src="${screenshot}" alt="Run summary" style="width:100%;max-width:560px;border-radius:8px;border:1px solid #e5e7eb;margin-bottom:20px;display:block;">` : ''}
+  ${bodyHtml}
 
-  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:20px;">
-    <thead>
-      <tr style="background:#f9fafb;">
-        <th style="padding:8px 14px;text-align:left;border:1px solid #e5e7eb;font-weight:600;color:#374151;">Metric</th>
-        <th style="padding:8px 14px;text-align:right;border:1px solid #e5e7eb;font-weight:600;color:#374151;">Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td style="padding:8px 14px;border:1px solid #e5e7eb;color:#374151;">Total</td><td style="padding:8px 14px;text-align:right;border:1px solid #e5e7eb;font-weight:600;">${s.total ?? 0}</td></tr>
-      <tr style="background:#f0fdf4;"><td style="padding:8px 14px;border:1px solid #e5e7eb;color:#16a34a;">Passed</td><td style="padding:8px 14px;text-align:right;border:1px solid #e5e7eb;color:#16a34a;font-weight:600;">${s.passed ?? 0}</td></tr>
-      <tr><td style="padding:8px 14px;border:1px solid #e5e7eb;color:#dc2626;">Failed</td><td style="padding:8px 14px;text-align:right;border:1px solid #e5e7eb;color:#dc2626;font-weight:600;">${s.failed ?? 0}</td></tr>
-      ${(s.flaky ?? 0) > 0 ? `<tr style="background:#fefce8;"><td style="padding:8px 14px;border:1px solid #e5e7eb;color:#ca8a04;">Flaky</td><td style="padding:8px 14px;text-align:right;border:1px solid #e5e7eb;color:#ca8a04;font-weight:600;">${s.flaky}</td></tr>` : ''}
-      <tr><td style="padding:8px 14px;border:1px solid #e5e7eb;color:#6b7280;">Skipped</td><td style="padding:8px 14px;text-align:right;border:1px solid #e5e7eb;color:#6b7280;font-weight:600;">${s.skipped ?? 0}</td></tr>
-    </tbody>
-  </table>
+  ${screenshot
+    ? `<img src="${screenshot}" alt="Run summary" style="width:100%;max-width:560px;border-radius:8px;border:1px solid #e5e7eb;margin:16px 0;display:block;">`
+    : ''
+  }
 
-  ${ci.branch || ci.commit_hash ? `
-  <div style="font-size:13px;color:#6b7280;margin-bottom:16px;padding:10px 14px;background:#f9fafb;border-radius:6px;border:1px solid #e5e7eb;">
-    ${ci.branch ? `Branch: <code style="background:#e5e7eb;padding:2px 6px;border-radius:4px;">${ci.branch}</code>` : ''}
-    ${ci.commit_hash ? `&nbsp; Commit: <code style="background:#e5e7eb;padding:2px 6px;border-radius:4px;">${ci.commit_hash.slice(0, 7)}</code>` : ''}
-    ${ci.commit_subject ? `<br><span style="font-style:italic;margin-top:4px;display:block;">${ci.commit_subject}</span>` : ''}
-    ${ci.commit_author ? `<span style="color:#9ca3af;margin-top:2px;display:block;">by ${ci.commit_author}</span>` : ''}
-  </div>` : ''}
+  <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;">
 
   <p style="font-size:13px;margin:0;">
-    <a href="${dashboardUrl}" style="color:#4f46e5;text-decoration:none;">View full report in dashboard →</a>
+    <a href="${dashboardUrl}" style="color:#4f46e5;text-decoration:none;">Click this link to view the full report in the dashboard →</a>
   </p>
 </body>
 </html>`
 }
 
-function buildPlainText({ sprintLabel, passRate, status, duration, s, ci, dashboardUrl }) {
-  return [
-    sprintLabel,
-    `Status: ${status} | Pass Rate: ${passRate}% | Duration: ${duration}`,
-    `Total: ${s.total ?? 0} | Passed: ${s.passed ?? 0} | Failed: ${s.failed ?? 0} | Skipped: ${s.skipped ?? 0}`,
-    ci.branch ? `Branch: ${ci.branch}${ci.commit_hash ? ` | Commit: ${ci.commit_hash.slice(0, 7)}` : ''}` : '',
-    `Dashboard: ${dashboardUrl}`,
-  ].filter(Boolean).join('\n')
+function buildPlainText({ sprintLabel, bodyText, dashboardUrl }) {
+  return [sprintLabel, '', bodyText, '', `Dashboard: ${dashboardUrl}`].join('\n')
+}
+
+function buildBodyText({ projectName, run, s, prevTotal }) {
+  const label = run.sprint? `${projectName} ${run.sprint}`: projectName
+  const total   = s.total   ?? 0
+  const newScripts = prevTotal !== null && total > prevTotal ? total - prevTotal : 0
+
+  const parts = [
+    'Dear Team,',
+    `Please find below the automated test execution report for ${label}.`,
+  ]
+
+  if (newScripts > 0) {
+    parts.push(
+      `This sprint includes ${newScripts} newly added test script${newScripts !== 1 ? 's' : ''} (previously ${prevTotal}, now ${total} total).`
+    )
+  }
+
+  // parts.push('Please see the attached screenshot for the detailed run summary.')
+
+  return parts.join('\n')
 }
 
 // ---------------------------------------------------------------------------
@@ -69,38 +66,46 @@ export default function EmailReportButton({ run, projectName, slug, showToast, c
   const [showModal, setShowModal] = useState(false)
   const [screenshot, setScreenshot] = useState(null)
   const [capturing, setCapturing] = useState(false)
+  const [bodyText, setBodyText] = useState('')
 
-  const s   = run?.summary  || {}
-  const ci  = run?.ci_info  || {}
-  const sprintLabel = run.sprint
-    ? `Sprint: ${[projectName, run.sprint].filter(Boolean).join(' ')}`
-    : 'No Sprint Specified'
-  const duration   = formatDuration(run.duration)
-  const startedAt  = run.started_at ? new Date(run.started_at).toLocaleString() : '—'
-  const passRate   = (s.pass_rate ?? 0).toFixed(1)
-  const statusColor = run.status === 'passed' ? '#16a34a' : run.status === 'failed' ? '#dc2626' : '#ca8a04'
-  const dashboardUrl = `${window.location.origin}/projects/${slug}`
+  const s = run?.summary || {}
+  const sprintLabel = run.sprint ? `${projectName} ${run.sprint}` : projectName
+  const dashboardUrl = `${window.location.origin}/projects/${slug}/runs/${run.run_number}`
 
   const handleOpen = async () => {
     setCapturing(true)
+
+    // Fetch previous run to calculate new scripts added
+    let prevTotal = null
+    try {
+      const { runs } = await getRuns(slug, 1, 50)
+      const prev = runs.find(r => r.run_number < run.run_number)
+      if (prev?.summary?.total != null) prevTotal = prev.summary.total
+    } catch {
+      // comparison unavailable — body still generates without new-scripts line
+    }
+
+    setBodyText(buildBodyText({ projectName, run, s, prevTotal }))
+
+    // Capture screenshot
     let imgDataUrl = null
     try {
-      const { default: html2canvas } = await import('html2canvas')
+      const { toPng } = await import('html-to-image')
       const el = cardRef?.current
       if (el) {
-        const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' })
-        imgDataUrl = canvas.toDataURL('image/png')
+        imgDataUrl = await toPng(el, { pixelRatio: 2, backgroundColor: '#ffffff' })
       }
-    } catch {
-      // screenshot unavailable — modal still opens without image
+    } catch (err) {
+      console.error('[EmailReport] screenshot failed:', err)
     }
+
     setScreenshot(imgDataUrl)
     setCapturing(false)
     setShowModal(true)
   }
 
-  const emailHtml = buildHtml({ sprintLabel, passRate, statusColor, status: run.status, duration, startedAt, s, ci, screenshot, dashboardUrl })
-  const plainText  = buildPlainText({ sprintLabel, passRate, status: run.status, duration, s, ci, dashboardUrl })
+  const emailHtml = buildHtml({ sprintLabel, bodyText, screenshot, dashboardUrl })
+  const plainText  = buildPlainText({ sprintLabel, bodyText, dashboardUrl })
 
   const copyToClipboard = async () => {
     try {
@@ -123,7 +128,7 @@ export default function EmailReportButton({ run, projectName, slug, showToast, c
   }
 
   const openEmailClient = () => {
-    const subject = encodeURIComponent(`Test Report — ${sprintLabel}`)
+    const subject = encodeURIComponent(sprintLabel)
     window.location.href = `mailto:?subject=${subject}&body=${encodeURIComponent(plainText)}`
   }
 
@@ -159,18 +164,27 @@ export default function EmailReportButton({ run, projectName, slug, showToast, c
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-6 py-4">
-              <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                Copy to clipboard and paste into Outlook — screenshot and formatting are preserved.
-              </p>
-              <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden bg-white">
-                <iframe
-                  srcDoc={emailHtml}
-                  title="Email preview"
-                  className="w-full"
-                  style={{ height: 440, border: 'none' }}
-                  sandbox="allow-same-origin"
+            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Message</label>
+                <textarea
+                  value={bodyText}
+                  onChange={(e) => setBodyText(e.target.value)}
+                  rows={6}
+                  className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
                 />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Preview</label>
+                <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden bg-white">
+                  <iframe
+                    srcDoc={emailHtml}
+                    title="Email preview"
+                    className="w-full"
+                    style={{ height: 420, border: 'none' }}
+                    sandbox="allow-same-origin"
+                  />
+                </div>
               </div>
             </div>
 

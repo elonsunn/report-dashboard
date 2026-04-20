@@ -48,7 +48,7 @@ export default function RunDetailHeader({ run, slug, showToast, jenkinsUrl, proj
             <StatusBadge status={run.status} />
 
             {/* Actions */}
-            <div className="ml-auto flex items-center gap-2">
+            <div data-html2canvas-ignore className="ml-auto flex items-center gap-2">
               <EmailReportButton run={run} projectName={projectName} slug={slug} showToast={showToast} cardRef={cardRef} />
               {jenkinsUrl && (
                 <TriggerJenkinsButton slug={slug} showToast={showToast} />
