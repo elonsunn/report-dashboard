@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getRuns } from '../../api/client'
+import { copyHtml } from '../../utils/clipboard'
 
 // ---------------------------------------------------------------------------
 // Email template builders
@@ -109,13 +110,10 @@ export default function EmailReportButton({ run, projectName, slug, showToast, c
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.write([
-        new ClipboardItem({ 'text/html': new Blob([emailHtml], { type: 'text/html' }) }),
-      ])
-      showToast?.('Rich email copied — paste into Outlook.', 'success')
+      const mode = await copyHtml(emailHtml, plainText)
+      showToast?.(mode === 'rich' ? 'Rich email copied — paste into Outlook.' : 'Copied as plain text.', 'success')
     } catch {
-      await navigator.clipboard.writeText(plainText)
-      showToast?.('Copied as plain text.', 'info')
+      showToast?.('Failed to copy. Please copy the text manually.', 'error')
     }
   }
 

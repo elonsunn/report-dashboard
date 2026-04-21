@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { updateProject, generateApiKey } from '../../api/client'
+import { copyText } from '../../utils/clipboard'
 
 export default function ProjectSettings({ project, onUpdate, showToast }) {
   const [name, setName]           = useState(project.name)
@@ -38,11 +39,14 @@ export default function ProjectSettings({ project, onUpdate, showToast }) {
     }
   }
 
-  const copyKey = () => {
-    if (apiKey) {
-      navigator.clipboard.writeText(apiKey)
+  const copyKey = async () => {
+    if (!apiKey) return
+    try {
+      await copyText(apiKey)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
+    } catch {
+      showToast?.('Failed to copy. Please select and copy the key manually.', 'error')
     }
   }
 
