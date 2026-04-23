@@ -8,6 +8,7 @@ import StatusFilter from '../components/runs/StatusFilter'
 import { SkeletonRunHeader } from '../components/common/SkeletonCard'
 import EmptyState from '../components/common/EmptyState'
 import { ToastContainer, useToast } from '../components/common/Toast'
+import TriggerJenkinsButton from '../components/common/TriggerJenkinsButton'
 import { useState, useDeferredValue } from 'react'
 
 export default function ProjectDetailPage() {
@@ -34,16 +35,28 @@ export default function ProjectDetailPage() {
 
   if (!run) {
     return (
-      <EmptyState
-        title="No runs yet"
-        description="Upload your first Playwright report to get started."
-        action={
-          <Link to={`/projects/${slug}/upload`}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg">
-            Upload Report
-          </Link>
-        }
-      />
+      <>
+        <ToastContainer toasts={toasts} onDismiss={dismissToast} />
+        <EmptyState
+          title="No runs yet"
+          description={
+            project?.jenkins_url
+              ? 'Trigger the pipeline to start your first run.'
+              : 'Configure the pipeline URL in settings to get started.'
+          }
+          action={
+            <div className="flex flex-wrap gap-3 justify-center">
+              <Link to={`/projects/${slug}/settings`}
+                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 text-sm font-medium rounded-lg">
+                Go to Settings
+              </Link>
+              {project?.jenkins_url && (
+                <TriggerJenkinsButton slug={slug} showToast={showToast} />
+              )}
+            </div>
+          }
+        />
+      </>
     )
   }
 
