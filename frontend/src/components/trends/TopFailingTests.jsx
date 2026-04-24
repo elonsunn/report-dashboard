@@ -15,7 +15,7 @@ export default function TopFailingTests({ data = [], title = 'Top Failing Tests'
   }
 
   const chartData = data.map((t) => ({
-    name:  t.title.length > 40 ? t.title.slice(0, 38) + '…' : t.title,
+    name:  t.title.length > 80 ? t.title.slice(0, 78) + '…' : t.title,
     full:  t.title,
     count: t.count,
   }))
@@ -27,7 +27,7 @@ export default function TopFailingTests({ data = [], title = 'Top Failing Tests'
         <BarChart data={chartData} layout="vertical" margin={{ top: 0, right: 30, left: 10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={false} />
           <XAxis type="number" tick={{ fontSize: 11 }} allowDecimals={false} />
-          <YAxis type="category" dataKey="name" width={180} tick={{ fontSize: 11 }} />
+          <YAxis type="category" dataKey="name" width={380} tick={{ fontSize: 12 }} />
           <Tooltip
             formatter={(v, _, { payload }) => [v, 'Occurrences']}
             labelFormatter={(_, data) => data[0]?.payload?.full || ''}

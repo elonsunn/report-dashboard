@@ -59,7 +59,7 @@ export default function TrendsPage() {
         <TotalCaseCountChart data={trends} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="space-y-5">
         <TopFailingTests data={topFailing} title="Top 10 Failing Tests" color="#ef4444" />
         <TopFailingTests data={topFlaky}   title="Top 10 Flaky Tests"   color="#eab308" />
       </div>
